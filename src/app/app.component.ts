@@ -57,11 +57,11 @@ export class AppComponent {
       // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
       options: {
         validateObjectExistence: false,  // defaults to false
-        expiresIn: 20, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+        expiresIn: 900, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
         useAccelerateEndpoint: true // Whether to use accelerate endpoint.
       },
     });
-    this.url = linkToStorageFile.url.toString()
+    this.url = linkToStorageFile.url.href;
     console.log('signed URL: ', linkToStorageFile.url);
     console.log('URL expires at: ', linkToStorageFile.expiresAt);
   }
