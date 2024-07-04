@@ -1,11 +1,13 @@
+import { } from 'aws-amplify/storage';
+
 import { AmplifyAuthenticatorModule, AuthenticatorService } from '@aws-amplify/ui-angular';
+import { getUrl, uploadData } from "aws-amplify/storage";
 
 import { Amplify } from 'aws-amplify';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TodosComponent } from './todos/todos.component';
 import outputs from '../../amplify_outputs.json';
-import { uploadData } from "aws-amplify/storage";
 
 Amplify.configure(outputs);
 
@@ -17,14 +19,16 @@ Amplify.configure(outputs);
   imports: [RouterOutlet, TodosComponent, AmplifyAuthenticatorModule],
 })
 export class AppComponent {
+  url = ''
   title = 'This angular Todo application deployed with Amplify';
   constructor(public authenticator: AuthenticatorService) {
     Amplify.configure(outputs);
+    this.getProfilePic().then();
   }
 
 
 
-  onChange(event: any){
+  onChange(event: any) {
     console.log('Selected!!');
   }
   onUpload() {
@@ -45,5 +49,22 @@ export class AppComponent {
       }
     };
   }
+
+
+  async getProfilePic() {
+    const linkToStorageFile = await getUrl({
+      path: "picture-submissions/profile-pic.jpg",
+      // Alternatively, path: ({identityId}) => `album/{identityId}/1.jpg`
+      options: {
+        validateObjectExistence: false,  // defaults to false
+        expiresIn: 20, // validity of the URL, in seconds. defaults to 900 (15 minutes) and maxes at 3600 (1 hour)
+        useAccelerateEndpoint: true // Whether to use accelerate endpoint.
+      },
+    });
+    this.url = linkToStorageFile.url.toString()
+    console.log('signed URL: ', linkToStorageFile.url);
+    console.log('URL expires at: ', linkToStorageFile.expiresAt);
+  }
+
 
 }
