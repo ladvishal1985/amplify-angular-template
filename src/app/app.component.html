@@ -4,16 +4,28 @@
     let-user="user"
     let-signOut="signOut"
   >
-    <h1>Hello {{ user?.signInDetails?.loginId }}'s todos</h1>
+    <div class="profile">
+      <div class="profile-picture">
+        <img [src]="url" />
+        <button onclick="document.getElementById('getFile').click()">
+          Edit
+        </button>
+        <input
+          type="file"
+          class="file-input"
+          (change)="onChange($event)"
+          id="getFile"
+          style="display: none"
+        />
+
+        <!-- <button (click)="onUpload()" id="upload">Upload</button> -->
+      </div>
+      <h1>Hello {{ user?.signInDetails?.loginId }}'s</h1>
+      <h1>Welcome to My todos</h1>
+    </div>
+
     <app-todos></app-todos>
-    <input
-      type="file"
-      class="file-input"
-      (change)="onChange($event)"
-      id="file"
-    />
-    <img src="url"/>
-    <button (click)="onUpload()" id="upload">Upload the file</button>
+
     <button (click)="signOut()">Sign Out</button>
   </ng-template>
 </amplify-authenticator>

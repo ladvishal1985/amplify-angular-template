@@ -1,0 +1,16 @@
+:host .profile-picture {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  gap: 5px;
+}
+
+:host .profile button {
+  height: 50px;
+  font-size: 12px;
+  
+}
+
+img {
+  height: 100px;
+}
